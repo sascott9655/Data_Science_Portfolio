@@ -1,0 +1,70 @@
+---
+title: "Module 4 Exercise Questions"
+author: "Samuel Scott"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+## Question 1 : Without using the multiplication operator (*), write ## a multiplication script that takes two
+## numbers as input and outputs the product using either a “for” loop ## or a “while” loop.
+## Show your script. 
+
+mult = function(x,y) {
+count = 0
+	for (i in 1:x) {
+	  for (j in 1:y) {
+		if(j <= y) {
+		  count = count + 1
+		}
+		j = j + 1
+	  }
+	 i = i + 1
+	}
+	return (count)
+}
+
+##2. Using the customers data (custdata.tsv). Like histogram, you can also plot the density of
+##a variable.
+##2.1: Figure out how to plot density of income. (5 points)
+
+cust <- read.csv('C:/Users/samsc/Desktop/ADS-500B/Data_and_Code2/custdata.tsv', header=T, sep='\t')
+cust
+
+library(ggplot2)
+ggplot(cust, aes(x=income)) + geom_density(fill='blue') +
+scale_x_continuous(labels = scales::label_number(accuracy = 0.01)) +
+labs(title = "Density plot for income",
+      x ="Income",
+      y ="Density")
+#used gemini to help scale x values to readabale using scale_x_continuous
+
+###2.2: Provide a couple of sentences of description along with the plot. Imagine you
+##are explaining this to your manager or a senior leader
+
+The density plot for income shows that most of the customers do not make over 6 figures or 100 thousand dollars in income. The density plot peak is near the beginning of the data set, which means that there is a positive right skew in our dataset. I would change the x-axis values to be smaller in value for the customer data set to capture more of the observations.
+
