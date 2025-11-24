@@ -1,0 +1,70 @@
+---
+title: "Module5_2.2"
+author: "Sam Scott"
+date: "2025-11-24"
+output: pdf_document
+---
+
+###2.2 Use R to query the database and understand how horsepower and weights are
+#related to each other. Plot them using a scatter plot and color the data points
+#using mpg. Do you see anything interesting/useful here? Report your observations
+#with this plot. Now let us cluster the data on this plane in a “reasonable” 
+#number of groups.Show your plot where the data points are now colored with the
+#cluster information and provide your interpretations.
+
+#install.packages("RMySQL") #one time run
+
+```{r}
+library(RMySQL)
+
+mydb=dbConnect(MySQL(), user='root', password='********', dbname='auto', host='localhost')
+dbListTables(mydb) #confirms connection with SQL database
+
+rs = dbSendQuery(mydb, "SELECT * from mpg;")
+
+vehicles = fetch(rs, n=-1)
+
+View(vehicles) 
+
+dbDisconnect(mydb)
+#difference between view and print. print shows results
+#in the console view shows it in a separate table which is easier to
+#interpret.
+
+library(ggplot2)
+ggplot(vehicles, aes(x=horsepower, y=weight, color=mpg)) + geom_point()
+
+
+#From the scatterplot alone, a relationship can be identified. There is a 
+#moderate to strong positive correlation between horsepower and weight. As 
+#weight rises in value so does horsepower. The color of mpg can be shown from 
+#blue to black. The blue show high mpg which in this dataset can around 40 miles
+#gallon and black showing values 10 miles per gallons or less. A lot of data 
+#points in blue are near values of low horsepower and low weight. This can 
+#mean that high mileage cars are low in weight and horsepower.  
+
+#Cluster the data:
+
+set.seed(1)
+vehicleCluster <- kmeans(vehicles[,4:5], 3, nstart=20)
+vehicleCluster
+```
+```{r}
+ggplot(vehicles, aes(horsepower, weight, color=vehicleCluster$cluster)) + geom_point()
+
+
+#### The cluster shows an interesting display of the data. I had an initial
+#difficulty interpreting it but I came to realize that the cluster were grouping 
+#them based on weight and horsepower, which I know seems obvious but the 
+#pattern wasn't easy for me to grasp. The clusters in black had a cluster value
+#of 1 meaning that these were are the vehicles that are low in weight and 
+#horsepower, great commute cars because they have high gas mileage. Light blue 
+#had a cluster value of 3 which had cars of medium horsepower and medium weight.
+#These are your overall average car, as they are versatile in heavy lifting and
+#have good miles per gallon. The dark blue cluster value is 2 and these 
+#vehicles are the ones meant for heavy lifting such as trucks and RVs, which 
+#are vehicles not known for their mpg but are known for moving heavy objects. 
+#The cluster analyis does line up with the scatterplot analysis in that 
+#vehicles with low weight and low horsepower have high miles per gallon
+#(negative correlation between the third variables).
+```
