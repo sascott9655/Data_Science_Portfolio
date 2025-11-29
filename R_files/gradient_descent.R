@@ -22,7 +22,7 @@ cost <- function(X, y, theta) {
   sum(X%*%theta - y)^2/(2*length(y))
 }
 
-#2-d vector in thetat using parameters m and b
+#2-d vector in theta using parameters m and b
 
 theta <- matrix(c(0,0), nrow=2)
 num_iter <- 300
@@ -51,6 +51,28 @@ print(theta)
 #visualize gradient descent every step of the way
 plot(x,y, main = "Gradient descent")
 abline(coef = theta_history[[1]])
+abline(coef = theta_history[[2]])
+abline(coef = theta_history[[3]])
+abline(coef = theta_history[[4]])
+abline(coef = theta_history[[5]])
+
+#put code in a loop
+plot(x,y, main= "Gradient descent")
+#Draw the first few lines and then draw every 10th line
+for (i in c(1,2,3,4,5,seq(6,num_iter, by=10))) {
+  abline(coef=theta_history[[i]], col=rgb(0.8,0,0,0.3))
+}
+
+#visualizing the cost function in each iteration
+
+plot(cost_history, type='line', col='blue', lwd=2, main='Cost function',
+     ylab = 'cost', xlab='Iterations')
+
+
+
+
+
+
 
 #Credit to Shah (2020) for code snippet 
 
