@@ -51,6 +51,27 @@ print(theta)
 #visualize gradient descent every step of the way
 plot(x,y, main = "Gradient descent")
 abline(coef = theta_history[[1]])
+abline(coef = theta_history[[2]])
+abline(coef = theta_history[[3]])
+abline(coef = theta_history[[4]])
+abline(coef = theta_history[[5]])
+
+#put it in a loop
+
+plot(x y)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #Credit to Shah (2020) for code snippet 
 
