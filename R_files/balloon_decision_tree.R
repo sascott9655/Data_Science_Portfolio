@@ -12,3 +12,20 @@ library(party)
 View(balloon)
 inflated.Tree <- ctree(Inflated~.,data=balloon)
 plot(inflated.Tree)
+
+#Random forest
+
+set.seed(1)
+population <- sample(nrow(balloon), 0.80* nrow(balloon))
+train <- balloon[population,]
+test <- balloon[-population,]
+
+library(randomForest)
+
+model <- randomForest(Inflated~.,data=train)
+model
+
+prediction <- predict(model, newdata=test)
+table(prediction, test$Inflated)
+
+prediction[1,1] + prediction[2,2]/nrow(test)
