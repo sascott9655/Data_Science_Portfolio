@@ -1,0 +1,61 @@
+---
+title: "Women_golfers"
+author: "Sam Scott"
+date: "2025-12-03"
+output: html_document
+---
+
+
+```{r}
+###2. For this clustering exercise, you are going to use the data on women professional
+#golfers’ performance on the LPGA, 2008 tour (“lpga2008.csv” dataset). The dataset has
+#the following attributes:
+#  i. Golfer: name of the player
+#ii. Average Drive distance
+#iii. Fairway Percentage
+#iv. Greens in regulation: in percentage
+#v. Average putts per round
+#vi. Sand attempts per round
+#vii. Sand saves: in percentage
+#viii. Total Winnings per round
+#ix. Log: Calculated as (Total Win/Round)
+#2 of 2
+#x. Total Rounds
+#xi. Id: Unique ID representing each player
+#(Implement this exercise in R language; import ‘cluster’ library)
+#Use agglomerative clustering and divisive clustering on this dataset to find out which
+#players have similar performance in the same season. Visualize the clusters using
+#dendrograms for both types of clustering models.
+```
+
+```{r}
+golfers <- read.csv('C:/Users/samsc/Desktop/ADS-500B/Data_and_Code2/lpga2008.csv', header=TRUE, sep=',')
+View(golfers)
+
+
+library(cluster)
+aclusters <- agnes(golfers, method='complete')
+aclusters$ac
+plot(aclusters)
+```
+
+
+```{r}
+#Cluster analysis:
+
+# The dendrogram of golfers has a height ranging up to 40,000 which
+# represents the TotalWinnings of the golfers and each golfers ID associated 
+# with how much they made. In the graph, ID 113 is a big outlier and stands out
+# amongst the rest of the golfers and that is Lorena Ochoa, which is her own
+# cluster. A majority of the formed golfer clusters are below 10,000 Total Winnings
+# showing it is difficult to make money in golf. A high agglomerative 
+# coefficient shows that the structure of the dendrogram is highly accurate
+# representing all the players in their own clusters working from bottom to top
+# showing that this agglomerative clustering. There are a lot of clusters that 
+# group the golfers based on similar total winnings. Zooming into the clusters
+# for example we can see a small cluster group of ID 145,2,21, and 139. If we
+# were to check our data table we would see that the four group cluster were all
+# golfers that made a high TotalWinnings amount. The agglomerative clusters do a
+# good job at being accurate and grouping a
+```
+
